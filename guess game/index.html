@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="styles.css" />
+    <title>Guessing game</title>
+</head>
+<body>
+<div class="background" href="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExODNkMjdmOWIxNDgwMDA5YzU1YTAyNGQwMjExNDQ2ZmY3ZjQ2NDBlNCZlcD12MV9pbnRlcm5hbF9naWZzX2dpZklkJmN0PWc/FyoaJE2iah7WYeyxWr/giphy.gif"></div>
+<div class="all-cont">
+    <div class="saying">
+        <h3>Select a difficulty level.</h3>
+    </div>
+    <div class="diff">
+        <select id="level">
+            <option id="none">Select</option>
+            <option id="easy">Easy</option>
+            <option id="medium">Medium</option>
+            <option id="hard">Hard</option>
+        </select>
+    </div>
+    <br>
+    <input type="button" id="btn_2" value="Select">
+    <br>
+    <div id="output1"></div>
+
+    <h1>Make the right guess</h1>
+    <P>You will win if you guess the right number</P>
+    <div class="selections">
+        <h2>Write a number</h2>
+        <div class="form">
+            <input type="text" id="text">
+        </div>
+        <br>
+        <div class="btn">
+        <input type="button" value="Guess" id="btn_1">
+        </div>
+        <br>
+        <div id="output"></div>
+    </div>
+</div>
+<footer>
+
+    <!-- Copyright -->
+    <div class="footer-copyright">&copy; Developed by
+      <a href="https://grohit.com/" class="white-text" target="_blank">SauravPreet</a>. <a href="https://codepen.io/SideWays143" target="_blank">
+    </div>
+    <!-- Copyright -->
+  
+  </footer>
+</body>
+<script>
+
+
+
+let attempts = 0;
+let difficulty = $("#level").val();
+let easyGen = Math.floor(Math.random() * 10);
+let mediumGen = Math.floor(Math.random() * 50);
+let hardGen = Math.floor(Math.random() * 100);
+
+
+//generate random number
+function randomNum(){
+    
+    
+    
+	if(difficulty == "Easy"){
+        let count = easyGen;
+        if($("#text").val() == easyGen){
+            attempts++
+            $("#output").html("You won and it took you " + attempts + " attempts. To restart the game select difficulty level again.")
+            attempts = 0;
+            $("#level").val("Select");
+            diffLevl();
+            reGenerate();
+        }
+
+        //hints
+        else if($("#text").val() < easyGen){
+            $("#output").html("Your guess is lower than the number generated.")
+            attempts++
+        }
+        else if($("#text").val() > easyGen){
+            $("#output").html("Your guess is higher than the number generated.")
+            attempts++
+        }
+
+        //error tapping
+        if($("#text").val() === "" || isNaN($("#text").val())){
+            $("#output").html("Please fill a number.")
+        }
+        if($("#text").val() > 10 || $("#text").val() < 0){
+            $("#output").html("Please fill a number between 0-10.")
+        }
+
+    }
+
+
+    //medium difficulty
+    else if(difficulty == "Medium"){
+        let count = mediumGen;
+        if($("#text").val() == mediumGen){
+            attempts++
+            $("#output").html("You won and it took you " + attempts + " attempts. To restart the game select difficulty level again.")
+            attempts = 0;
+            $("#level").val("Select");
+            diffLevl();
+            reGenerate();
+        }
+        else if($("#text").val() < mediumGen){
+            $("#output").html("Your guess is lower than the number generated.")
+            attempts++
+        }
+        else if($("#text").val() > mediumGen){
+            $("#output").html("Your guess is higher than the number generated.")
+            attempts++
+        }
+        if($("#text").val() === "" || isNaN($("#text").val())){
+            $("#output").html("Please fill a number.")
+        }
+        if($("#text").val() > 50 || $("#text").val() < 0){
+            $("#output").html("Please fill a number between 0-50.")
+        }
+        console.log("sucess");
+    }
+
+    //hard difficulty
+    else if(difficulty == "Hard"){
+        let count = hardGen;
+        if($("#text").val() == hardGen){
+            attempts++
+            $("#output").html("You won and it took you " + attempts + " attempts. To restart the game select difficulty level again.")
+            attempts = 0;
+            $("#level").val("Select");
+            diffLevl();
+            reGenerate();
+        }
+        else if($("#text").val() < hardGen){
+            $("#output").html("Your guess is lower than the number generated.")
+            attempts++
+        }
+        else if($("#text").val() > hardGen){
+            $("#output").html("Your guess is higher than the number generated.")
+            attempts++
+        }
+        if($("#text").val() === "" || isNaN($("#text").val())){
+            $("#output").html("Please fill a number.")
+        }
+        if($("#text").val() > 100 || $("#text").val() < 0){
+            $("#output").html("Please fill a number between 0-100.")
+        }
+        console.log("sucess");
+    }
+
+}
+
+//select the difficulty level
+function diffLevl(){
+    difficulty = $("#level").val();
+    if(difficulty == "Easy"){
+        $("#output1").html("Please fill a number between 0-10.");
+    }
+    else if(difficulty == "Medium"){
+        $("#output1").html("Please fill a number between 0-50.");
+    }
+    else if(difficulty == "Hard"){
+        $("#output1").html("Please fill a number between 0-100.");
+    }
+    else if(difficulty == "Select"){
+        $("#output1").html("Please select a difficulty level.")
+    }
+}
+
+
+//to generate random number when someone won...
+function reGenerate(){
+easyGen = Math.floor(Math.random() * 10);
+mediumGen = Math.floor(Math.random() * 50);
+hardGen = Math.floor(Math.random() * 100);
+}
+
+
+
+
+//event handlers
+$('#btn_1').click(function(){
+    randomNum();
+});
+$('#btn_2').click(function(){
+    diffLevl();
+});
+
+</script>
+</html>
